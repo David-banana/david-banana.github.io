@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Core"><title>Service Mesh · Hexo</title><meta name="description" content="ServiceMesh 服务网格有哪些应用？微服务的部署架构中有一个有趣的边车模式，并且基于边车模式，扩展出了Service Mesh 服务网格的概念，这一课时我们一起来学习下Service Mesh相关的知识
+Sidecar设计模式首先介绍一下一个微服务的设计模式——Sidecar，也就是边车模式"><meta name="keywords" content="极限博客,极限Blog,博客,极限"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.0.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>心之所愿，无事不成。<br> Nothing is impossible to a willing heart.</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/mrcore"><i class="fa fa-github"></i></a></li><li><a href="mailto:x@jixian.io"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://sighttp.qq.com/authd?IDKEY="><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"> <span>© 2017 - 2020 </span><i class="fa fa-star"></i><span> Core</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><a href="https://github.com/mrcore/hexo-theme-Anatole-Core" target="_blank">Anatole-Core.  </a><a href="http://www.beian.miit.gov.cn/" target="_blank">&nbsp;粤ICP备15011643号</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/guestbook">留言</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Service Mesh</a></h3></div><div class="post-content"><h4 id="ServiceMesh-服务网格有哪些应用？"><a href="#ServiceMesh-服务网格有哪些应用？" class="headerlink" title="ServiceMesh 服务网格有哪些应用？"></a>ServiceMesh 服务网格有哪些应用？</h4><p>微服务的部署架构中有一个有趣的边车模式，并且基于边车模式，扩展出了Service Mesh 服务网格的概念，这一课时我们一起来学习下Service Mesh相关的知识</p>
+<h4 id="Sidecar设计模式"><a href="#Sidecar设计模式" class="headerlink" title="Sidecar设计模式"></a>Sidecar设计模式</h4><p>首先介绍一下一个微服务的设计模式——Sidecar，也就是边车模式，边车模式是一种分布式服务架构的设计模式，特别是在各大云服务厂商中应用较多。</p>
+<p>边车模式因为类似生活中的边三轮摩托车而得名，边三轮摩托车是给摩托车加装一个挎斗，可以装载更多的货物，变得更加多用途，得益于这样的特性，边三轮摩托曾经得到了广泛的运用。</p>
+<p>在系统设计时，边车模式通过给应用程序添加边车的方式来拓展应用程序现有的功能，分离通用的业务逻辑，比如日志记录，流量控制，服务控制和发现，限流熔断等功能，通过添加边车实现，微服务只需要庄主实现业务逻辑即可，实现了控制和逻辑的分离和解耦。</p>
+<p>边车模式中的边车，实际上就是一个Agent，微服务的通信可以通过Agent代理完成，在部署时，需要同时启动Agent，Agent会处理服务注册，日志和服务监控等逻辑，这样在开发时，就可以忽略这些和对外业务逻辑本身没有关联的功能，实现更好的内聚和解耦。</p>
+<p>应用边车模式解耦了服务治理和对外的业务逻辑，这一点和API网关比较像，但是边车模式控制的粒度更细，可以直接接管服务实例，合理扩展边车的功能，能够实现服务的横向管理，提升开发效率。</p>
+<h4 id="Service-Mesh服务网格"><a href="#Service-Mesh服务网格" class="headerlink" title="Service Mesh服务网格"></a>Service Mesh服务网格</h4><p>微服务领域有CNCF组织（Cloud Native Computing Foundation），也就是云原生基金会，CNCF致力于微服务开源技术的推广，Service Mesh是CNCF推广的新一代微服务架构，致力于解决服务间通讯。</p>
+<p>Service Mesh基于边车模式演讲，用过在系统中添加边车代理，也就是Sidecar Proxy实现。</p>
+<p><img src="%5Cimage%5C2020-07-05%5CCiqc1F7YqhyAVsPfAAF3tkypmzU109.png" alt="Ciqc1F7YqhyAVsPfAAF3tkypmzU109"></p>
+<p>Service Mesh可以认为是边车模式的进一步扩展，提供了以下功能：</p>
+<ul>
+<li>管理服务注册和发现</li>
+<li>提供限流和降级功能</li>
+<li>前置的负载熔断</li>
+<li>服务熔断功能</li>
+<li>日志和服务运行状态监控</li>
+<li>管理微服务和上层容器的通信</li>
+</ul>
+<h4 id="Service-Mesh有哪些特点"><a href="#Service-Mesh有哪些特点" class="headerlink" title="Service Mesh有哪些特点"></a>Service Mesh有哪些特点</h4><p>使用Sidebar或者Sevice Mesh，都可以认为是在原有的系统之上抽象了一层新的设计来实现，没有什么系统问题不是抽象一层解决不了的，如果有，那就再抽象一层。</p>
+<p>Service Mesh服务网格就是使用了这样的思想，抽象出专门的一层，提供服务治理领域所需的服务注册发现、负载均衡、熔断降级、监控等功能，现在的微服务有很多部署在各大云服务厂商的主机上，不同厂商的实现标准不同，如何更好地基于各类云服务部署业务系统，这也是云原生要解决的问题。</p>
+<p>Service Mesh可以统一管理微服务与上层通信的部分，接管各种网络通信，访问控制等，我们的业务代码只需要关心业务逻辑就可以，简化开发工作。</p>
+<h4 id="Service-Mesh和API网关的区别"><a href="#Service-Mesh和API网关的区别" class="headerlink" title="Service Mesh和API网关的区别"></a>Service Mesh和API网关的区别</h4><p>服务网格是西安的功能和API网关类似，都可以以一个切面的形式，进行一些横向功能的实现，比如流量控制、访问控制、日志和监控等功能。</p>
+<p>服务网格和 API 网关主要的区别是部署方式不同，在整体系统架构中的位置不一样。</p>
+<p>API 网关通常是独立部署，通过单独的系统提供服务，为了实现高可用，还会通过网关集群等来管理；而服务网格通常是集成在应用容器内的，服务网格离应用本身更近，相比 API 网关，和应用交互的链路更短，所以可以实现更细粒度的应用管理，也体现了 Sidecar 边车的设计思想。</p>
+<h4 id="Service-Mesh解决方案"><a href="#Service-Mesh解决方案" class="headerlink" title="Service Mesh解决方案"></a>Service Mesh解决方案</h4><p>Istio与Linkerd</p>
+<h4 id="Istio"><a href="#Istio" class="headerlink" title="Istio"></a>Istio</h4><p>Istio 是 Google、IBM 等几大公司联合开源的一个服务网格组件，Istio 提供了负载均衡、服务间的身份验证、监控等方法。</p>
+<p>Istio 的实现是通过 Sidecar ，通过添加一个 Sidecar 代理，在环境中为服务添加 Istio 的支持。Istio 代理会拦截不同服务之间的通信，然后进行统一的配置和管理。</p>
+<p>官方文档中，对 Istio 支持的特性描述如下：</p>
+<p>为 HTTP、gRPC、WebSocket 和 TCP 流量自动负载均衡；<br>对流量行为进行细粒度控制，包括丰富的路由规则、重试、故障转移和故障注入；<br>可插拔的策略层和配置 API，支持访问控制、速率限制和配额；<br>管理集群内所有流量的自动化度量、日志记录和追踪；<br>实现安全的服务间通信，支持基于身份验证和授权的集群。<br>Istio 官网开放了中文用户指南，可以点击链接查看 <a target="_blank" rel="noopener" href="https://istio.io/zh/docs/%EF%BC%8C%E7%BF%BB%E8%AF%91%E8%B4%A8%E9%87%8F%E4%B8%80%E8%88%AC%EF%BC%8C%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E5%90%8C%E5%AD%A6%E5%BB%BA%E8%AE%AE%E7%9B%B4%E6%8E%A5%E6%9F%A5%E7%9C%8B%E8%8B%B1%E6%96%87%E6%89%8B%E5%86%8C%E3%80%82">https://istio.io/zh/docs/，翻译质量一般，感兴趣的同学建议直接查看英文手册。</a></p>
+<h4 id="Linkerd"><a href="#Linkerd" class="headerlink" title="Linkerd"></a>Linkerd</h4><p>Linkerd 最早由 Twitter 贡献，支持的功能和 Istio 类似，Linkerd 是一款开源网络代理，可以作为服务网格进行部署，在应用程序内管理和控制服务与服务之间的通信。</p>
+<p>Linkerd 出现来自 Linkerd 团队为 Twitter、Yahoo、Google 和 Microsoft 等公司运营大型生产系统时发现：最复杂和令人惊讶的问题来源通常不是服务本身，而是服务之间的通讯。Linkerd 目标是解决服务之间的通信问题，通过添加 Linkerd 代理，实现一个专用的基础设施层，为应用提供服务发现、路由、错误处理及服务可见性等功能，而无须侵入应用内部实现。</p>
+<p>Istio 和 Linkerd 都处于快速发展阶段，可以到 Istio 和 Linkerd 的官网了解更多的信息。国内也有一些技术小组在进行相关的文档翻译工作，有意向的同学可以加入。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://kaiwu.lagou.com/course/courseInfo.htm?courseId=69#/detail/pc?id=1918">分布式技术原理与实战45讲</a></p>
+</blockquote>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-08-09</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Technology-blog/" title="Technology blog">Technology blog </a><a class="tag" href="/tags/技术笔记/" title="技术笔记">技术笔记 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://yoursite.com/2020/08/09/2020-07-05-ServiceMesh/,Hexo,Service Mesh,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/08/09/2020-08-08-leetcodeSharesQuestions/" title="leetcode股票问题系列总结">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/08/09/2020-07-05-HTTP/" title="HTTP训练营！">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'',
+  app_key:'',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>

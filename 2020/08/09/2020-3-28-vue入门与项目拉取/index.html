@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Core"><title>vue入门及项目拉取！ · Hexo</title><meta name="description" content="Vue的安装与组建的初步使用Vue简介Vue 只关注视图层， 采用自底向上增量开发的设计。
+Vue 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。
+Vue的安装Node.js安装 可以在 https://nodejs.org/ nodejs 官方网站下载安装包，然后进行安装。"><meta name="keywords" content="极限博客,极限Blog,博客,极限"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.0.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>心之所愿，无事不成。<br> Nothing is impossible to a willing heart.</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/mrcore"><i class="fa fa-github"></i></a></li><li><a href="mailto:x@jixian.io"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://sighttp.qq.com/authd?IDKEY="><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"> <span>© 2017 - 2020 </span><i class="fa fa-star"></i><span> Core</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><a href="https://github.com/mrcore/hexo-theme-Anatole-Core" target="_blank">Anatole-Core.  </a><a href="http://www.beian.miit.gov.cn/" target="_blank">&nbsp;粤ICP备15011643号</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/guestbook">留言</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>vue入门及项目拉取！</a></h3></div><div class="post-content"><p><img src="%5Cimage%5C2020-03-28%5Cvue.png"></p>
+<h2 id="Vue的安装与组建的初步使用"><a href="#Vue的安装与组建的初步使用" class="headerlink" title="Vue的安装与组建的初步使用"></a>Vue的安装与组建的初步使用</h2><h4 id="Vue简介"><a href="#Vue简介" class="headerlink" title="Vue简介"></a>Vue简介</h4><p>Vue 只关注视图层， 采用自底向上增量开发的设计。</p>
+<p>Vue 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。</p>
+<h4 id="Vue的安装"><a href="#Vue的安装" class="headerlink" title="Vue的安装"></a>Vue的安装</h4><h5 id="Node-js安装"><a href="#Node-js安装" class="headerlink" title="Node.js安装"></a>Node.js安装</h5><p> 可以在 <code>https://nodejs.org/</code> nodejs 官方网站下载安装包，然后进行安装。 </p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585363666(1).png" alt="1585363666(1)"></p>
+<p>在安装好了以后，在终端输入可以得到以上版本信息，说明你的nodejs环境已经安装完成了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="%5Cimage%5C2020-03-28%5C20170825163827397.png" alt="20170825163827397"></p>
+<h5 id="安装vue-cli-VUE-脚手架工具"><a href="#安装vue-cli-VUE-脚手架工具" class="headerlink" title="安装vue-cli VUE 脚手架工具"></a>安装vue-cli VUE 脚手架工具</h5><p>在终端输入，全局安装vue-cli</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g vue-cli</span><br></pre></td></tr></table></figure>
+
+<p> 因为默认是从国外服务器下，可能会出现速度很慢或者安装失败的问题，可以使用阿里巴巴在国内的镜像服务器。 通过config命令设置默认下载路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org </span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，在终端中输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue -V</span><br></pre></td></tr></table></figure>
+
+<p><img src="%5Cimage%5C2020-03-28%5C20170825164518375.png" alt="20170825164518375"></p>
+<p>获得以上信息表示安装完成</p>
+<h4 id="从Git拉取项目"><a href="#从Git拉取项目" class="headerlink" title="从Git拉取项目"></a>从Git拉取项目</h4><h5 id="Git的下载与安装"><a href="#Git的下载与安装" class="headerlink" title="Git的下载与安装"></a>Git的下载与安装</h5><p><img src="%5Cimage%5C2020-03-28%5C1585364512(1).png" alt="1585364512(1)"></p>
+<p>安装好之后在桌面界面点击鼠标右键，会出现如下界面</p>
+<p><img src="%5Cimage%5C2020-03-28%5C20181012194653451.png" alt="20181012194653451"></p>
+<p>检查Git是否成功安装，在终端中输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git</span><br></pre></td></tr></table></figure>
+
+<p><img src="%5Cimage%5C2020-03-28%5C1585365041(1).png" alt="1585365041(1)"></p>
+<p>得到以下界面表示安装成功</p>
+<h5 id="Git环境配置"><a href="#Git环境配置" class="headerlink" title="Git环境配置"></a>Git环境配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 配置用户名</span><br><span class="line">git config --global user.name &quot;username&quot;&#x2F;&#x2F;（ &quot;username&quot;是自己的账户名，）</span><br><span class="line"># 配置邮箱</span><br><span class="line">git config --global user.email &quot;username@email.com&quot;&#x2F;&#x2F;(&quot;username@email.com&quot;注册账号时用的邮箱)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上命令配置结束之后，在命令框中输入以下命令查看配置是否完成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global --list</span><br></pre></td></tr></table></figure>
+
+<h5 id="生成ssh"><a href="#生成ssh" class="headerlink" title="生成ssh"></a>生成ssh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<p>输入命令后一般在系统板目录下查看是否有新生成的文件，将ssh文件夹中的公钥（ id_rsa.pub）添加到代码管理平台中，在代码管理平台的个人账户的设置中找到如下界面</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585365355(1).png" alt="1585365355(1)"></p>
+<p>将公钥（ id_rsa.pub）文件中内容复制粘贴到key中，然后点击Ass SSH key就好啦<br>测试一下配置是否成功，在Git Bush命令框（就是刚才配置账号和邮箱的命令框）中继续输入以下命令，回车</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>查看是否配置成功</p>
+<h4 id="安装与配置Visual-Studio-Code"><a href="#安装与配置Visual-Studio-Code" class="headerlink" title="安装与配置Visual Studio Code"></a>安装与配置Visual Studio Code</h4><h5 id="安装Visual-Studio-Code"><a href="#安装Visual-Studio-Code" class="headerlink" title="安装Visual Studio Code"></a>安装Visual Studio Code</h5><p><img src="%5Cimage%5C2020-03-28%5C1585365522(1).png" alt="1585365522(1)"></p>
+<h5 id="接下来安装一些必要以及有用的插件（参考）"><a href="#接下来安装一些必要以及有用的插件（参考）" class="headerlink" title="接下来安装一些必要以及有用的插件（参考）"></a>接下来安装一些必要以及有用的插件（参考）</h5><p><img src="%5Cimage%5C2020-03-28%5C1585365992(1).jpg" alt="1585365992(1)"></p>
+<p>中文支持</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585366041(1).png" alt="1585366041(1)"></p>
+<p>代码规范化管理</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585366090(1).jpg" alt="1585366090(1)"></p>
+<p>Vue支持</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585366122(1).png" alt="1585366122(1)"></p>
+<p>Git纳管支持</p>
+<h5 id="从代码管理平台上拉取项目（以GitHub为例）"><a href="#从代码管理平台上拉取项目（以GitHub为例）" class="headerlink" title="从代码管理平台上拉取项目（以GitHub为例）"></a>从代码管理平台上拉取项目（以GitHub为例）</h5><p><img src="%5Cimage%5C2020-03-28%5C1585366282(1).png" alt="image-20200328113125797"></p>
+<p>从自己的代码仓库中如图操作，复制URL</p>
+<p>创建前端代码文件夹，Visual Studio Code终端cd到这个文件夹</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585366412(1).png" alt="1585366412(1)"></p>
+<p>输入以下命令进行项目克隆</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone 你项目的Url</span><br></pre></td></tr></table></figure>
+
+<p>项目拉去完毕后需要通过下面的命令进行依赖的安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，使用以下代码启动项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p><img src="%5Cimage%5C2020-03-28%5C1585366761(1).png" alt="1585366761(1)"></p>
+<p>启动成功后这便是前端的本地URL地址</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585366825(1).png" alt="1585366825(1)"></p>
+<h4 id="Vue基本语法（参考Vue官方文档）"><a href="#Vue基本语法（参考Vue官方文档）" class="headerlink" title="Vue基本语法（参考Vue官方文档）"></a>Vue基本语法（参考Vue官方文档）</h4><h5 id="初识Vue的第一个例子"><a href="#初识Vue的第一个例子" class="headerlink" title="初识Vue的第一个例子"></a>初识Vue的第一个例子</h5><p><img src="%5Cimage%5C2020-03-28%5C15841944-6ac98e448b98a323.png" alt="15841944-6ac98e448b98a323"></p>
+<p>new Vue是创建了一个实例</p>
+<p>el:’#app’意思是让Vue接管id为‘app’中的div内容，data：就是Vue中的一些数据，页面初始化之前就已经定义好</p>
+<p>{message}：通过el和div做了绑定之后，可以直接通过{}的形式将data里的message进行显示，如果在别的div里写{message}是不会显示’Hello Vue!’的，只会显示{message}，因为Vue实例只会去处理id为’app’里面的内容。</p>
+<h5 id="Vue常用命令"><a href="#Vue常用命令" class="headerlink" title="Vue常用命令"></a>Vue常用命令</h5><ol>
+<li><strong>v-model</strong> 多用于表单元素实现双向数据绑定</li>
+<li><strong>v-for</strong> 格式： v-for=”字段名 in(of) 数组json” 循环数组或json(同angular中的ng-repeat),需要注意从vue2开始取消了$index</li>
+<li><strong>v-show</strong> 显示内容</li>
+<li><strong>v-hide</strong> 隐藏内容</li>
+<li><strong>v-if</strong>  显示与隐藏</li>
+<li><strong>v-else-if</strong> 必须和v-if连用</li>
+<li><strong>v-else</strong> 必须和v-if连用  不能单独使用  否则报错  模板编译错误</li>
+<li><strong>v-bind</strong> 动态绑定  作用： 及时对页面的数据进行更改</li>
+<li><strong>v-on:click</strong> 给标签绑定函数，可以缩写为@，例如绑定一个点击函数 函数必须写在methods里面</li>
+<li><strong>v-text</strong> 解析文本</li>
+<li><strong>v-html</strong>  解析html标签</li>
+<li><strong>v-bind:class</strong>  三种绑定方法  1、对象型  ‘{red:isred}’  2、三元型  ‘isred?”red”:”blue”‘  3、数组型  ‘[{red:”isred”},{blue:”isblue”}]’</li>
+<li><strong>v-once</strong> 进入页面时  只渲染一次 不在进行渲染</li>
+<li><strong>v-cloak</strong> 防止闪烁</li>
+<li><strong>v-pre</strong> 把标签内部的元素原位输出</li>
+</ol>
+<h5 id="基本组件属性"><a href="#基本组件属性" class="headerlink" title="基本组件属性"></a>基本组件属性</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">el,         <span class="comment">// 要绑定的 DOM element</span></span><br><span class="line">template,   <span class="comment">// 要解析的模板，可以是 #id, HTML 或某個 DOM element</span></span><br><span class="line">data,       <span class="comment">// 要绑定的数据</span></span><br><span class="line">computed,   <span class="comment">// 依赖于别的数据计算出来的数据, name = firstName + lastName</span></span><br><span class="line">watch,      <span class="comment">// 监听方法, 监听到某一数据变化时, 需要做的对应操作</span></span><br><span class="line">methods,    <span class="comment">// 定义可以在元件或模板內使用的方法</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="基础使用实例"><a href="#基础使用实例" class="headerlink" title="基础使用实例"></a>基础使用实例</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app=<span class="keyword">new</span> Vue(&#123;</span><br><span class="line">         el:<span class="string">&#x27;#app&#x27;</span>,<span class="comment">//标签的类名、id，用于获取元素</span></span><br><span class="line">         <span class="comment">//以键值对的形式存放用到的数据成员</span></span><br><span class="line">         data:&#123;</span><br><span class="line">             msg:<span class="string">&#x27;显示的内容&#x27;</span>       </span><br><span class="line">         &#125;,</span><br><span class="line">        <span class="comment">//包含要用到的函数方法</span></span><br><span class="line">         methods:&#123;            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这里大概介绍一下，详细的语法不在多做赘述，请大家在Vue官方文档或菜鸟教程自行学习。</p>
+<h4 id="Vue组件库（Element-UI）"><a href="#Vue组件库（Element-UI）" class="headerlink" title="Vue组件库（Element-UI）"></a>Vue组件库（Element-UI）</h4><p>组件库对Vue来说是相当重要的，能够大大提高开发的速度与效率<a target="_blank" rel="noopener" href="https://element.eleme.io/#/zh-CN">https://element.eleme.io/#/zh-CN</a></p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585367968(1).png" alt="image-20200328115929912"></p>
+<p>这里我们，我们可以下列代码的方式进行安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i element-ui -S</span><br></pre></td></tr></table></figure>
+
+<p>目前可以通过 <a target="_blank" rel="noopener" href="https://unpkg.com/element-ui/">unpkg.com/element-ui</a> 获取到最新版本的资源，在页面上引入 js 和 css 文件即可开始使用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 引入样式 --&gt;</span><br><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;https://unpkg.com/element-ui/lib/theme-chalk/index.css&quot;</span>&gt;</span><br><span class="line">&lt;!-- 引入组件库 --&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;https://unpkg.com/element-ui/lib/index.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我们通过实例看看具体使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- import CSS --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://unpkg.com/element-ui/lib/theme-chalk/index.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> @<span class="attr">click</span>=<span class="string">&quot;visible = true&quot;</span>&gt;</span>Button<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-dialog</span> <span class="attr">:visible.sync</span>=<span class="string">&quot;visible&quot;</span> <span class="attr">title</span>=<span class="string">&quot;Hello world&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>Try Element<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- import Vue before Element --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/vue/dist/vue.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- import JavaScript --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/element-ui/lib/index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">      el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line"><span class="javascript">      data: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> &#123; <span class="attr">visible</span>: <span class="literal">false</span> &#125;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果如下</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585368511(1).png" alt="1585368511(1)"></p>
+<p>我对页面的元素对应的代码进行了大概的解释，同上，我的visible在data中已经定义为false，因此点击button出发@click=”visible = true”事件，我的弹窗便显示出来</p>
+<p>el-button可绑定事件与属性</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585368666(1).png" alt="1585368666(1)"></p>
+<p>dialog可绑定的事件与属性</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585372032(1).png" alt="image-20200328130715931"></p>
+<p>这些事件与属性都是可以在代码中直接配置，在此只对这两个组件进行较为详细的介绍，其他组件及更加详细的介绍可直接在官方文档中进行学习</p>
+<h4 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h4><h5 id="前后端分离开发跨域问题"><a href="#前后端分离开发跨域问题" class="headerlink" title="前后端分离开发跨域问题"></a>前后端分离开发跨域问题</h5><p>配置webpack proxyTable 代理跨域</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585393880(1).png" alt="1585393880(1)"></p>
+<p>配置前端ajax代理，发送后端请求方法如下图所示</p>
+<p><img src="%5Cimage%5C2020-03-28%5C1585393980(1).png" alt="1585393980(1)"></p>
+<h5 id="静态类型检测"><a href="#静态类型检测" class="headerlink" title="静态类型检测"></a>静态类型检测</h5><p>推荐在开发较复杂的组件时使用 <code>props</code> 静态类型检测，提高组件的健壮性，多数情况下可以在转码阶段提前发现错误。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// before</span></span><br><span class="line">prop: [</span><br><span class="line">  <span class="string">&#x27;id&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;multiple&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;callback&#x27;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// after</span></span><br><span class="line">props: &#123;</span><br><span class="line">  id: &#123;</span><br><span class="line">    type: [ <span class="built_in">Number</span>, <span class="built_in">Array</span> ],</span><br><span class="line">    required: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  multiple: &#123;</span><br><span class="line">    type: <span class="built_in">Boolean</span>,</span><br><span class="line">    <span class="keyword">default</span>: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  callback : <span class="built_in">Function</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-08-09</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Technology-blog/" title="Technology blog">Technology blog </a><a class="tag" href="/tags/技术笔记/" title="技术笔记">技术笔记 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://yoursite.com/2020/08/09/2020-3-28-vue入门与项目拉取/,Hexo,vue入门及项目拉取！,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/08/09/2020-4-3-Career%20development%20path%20of%20technician/" title="技术人职业发展方向">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/08/09/2020-3-24-%E4%BF%BA%E7%9A%84%E5%AE%A2%E5%88%B6%E9%94%AE%E7%9B%98%E5%88%9D%E8%AE%B0%E5%BD%95/" title="俺的客制键盘初记录！">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'',
+  app_key:'',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>

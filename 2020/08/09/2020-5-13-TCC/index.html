@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Core"><title>TCC事务 · Hexo</title><meta name="description" content="如何在业务中体现TCC事务模型在分布式系统设计中，随着微服务的流行，通常一个业务操作被拆分为多个子任务，比如电商系统的下单和支付操作，就涉及到了创建和更新订单、扣减账户余额、扣减库存、发送物流消息等，那么在复杂业务开发中，如何保证最终数据一致性呢？
+TCC事务模型是什么TCC（Try-Confirm"><meta name="keywords" content="极限博客,极限Blog,博客,极限"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.0.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>心之所愿，无事不成。<br> Nothing is impossible to a willing heart.</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/mrcore"><i class="fa fa-github"></i></a></li><li><a href="mailto:x@jixian.io"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://sighttp.qq.com/authd?IDKEY="><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"> <span>© 2017 - 2020 </span><i class="fa fa-star"></i><span> Core</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><a href="https://github.com/mrcore/hexo-theme-Anatole-Core" target="_blank">Anatole-Core.  </a><a href="http://www.beian.miit.gov.cn/" target="_blank">&nbsp;粤ICP备15011643号</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/guestbook">留言</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>TCC事务</a></h3></div><div class="post-content"><h4 id="如何在业务中体现TCC事务模型"><a href="#如何在业务中体现TCC事务模型" class="headerlink" title="如何在业务中体现TCC事务模型"></a>如何在业务中体现TCC事务模型</h4><p>在分布式系统设计中，随着微服务的流行，通常一个业务操作被拆分为多个子任务，比如电商系统的下单和支付操作，就涉及到了创建和更新订单、扣减账户余额、扣减库存、发送物流消息等，那么在复杂业务开发中，如何保证最终数据一致性呢？</p>
+<h4 id="TCC事务模型是什么"><a href="#TCC事务模型是什么" class="headerlink" title="TCC事务模型是什么"></a>TCC事务模型是什么</h4><p>TCC（Try-Confirm-Cancel）的概念来源于Pat Helland 发表的一篇名为“Life beyond Distributed Transaction an Apostate’s Opinion”的论文。</p>
+<p>TCC提出了一种新的事务模型，基于业务层面的事务定义，锁粒度完全由业务自己控制，目的是解决复杂业务中，跨表跨库等大颗粒度资源锁定的问题。TCC把事务运行过程分成了Try、Confirm/ Cancel两个阶段，每个阶段的逻辑由业务代码控制，避免了长事务，可以获取更高的性能。</p>
+<h4 id="TCC的各个阶段"><a href="#TCC的各个阶段" class="headerlink" title="TCC的各个阶段"></a>TCC的各个阶段</h4><p>TCC的具体流程如下所示<img src="%5Cimage%5C2020-05-13%5CCiqc1F6qgbmAC6GbAAJF3yzrcWs383.png" alt="Ciqc1F6qgbmAC6GbAAJF3yzrcWs383"></p>
+<p><strong>Try阶段</strong>：调用Try接口，尝试执行业务，完成所有业务检查，预留业务资源。</p>
+<p><strong>Confirm 或 Cancel阶段</strong>：两者是互斥的，只能进入其中一个，并且都满足幂等性，允许失败重试。</p>
+<p><strong>Confirm 操作</strong>：对业务做确认提交，确认执行业务操作，不做其他业务检查，只使用Try阶段预留的业务资源。</p>
+<p><strong>Cancel 操作</strong>：在业务执行出错误，需要回滚的状态下执行业务取消，释放预留资源。Try阶段失败可以Cancel，如果Confirm和Cancel阶段失败了怎么办？</p>
+<p>TCC中会添加事务日志，如果Confirm或者Cancel阶段出错，则会进行重试，所以这两个阶段需要支持幂等；如果重试失败，则需要人工介入进行恢复和处理等。</p>
+<h4 id="从真实业务场景分析TCC"><a href="#从真实业务场景分析TCC" class="headerlink" title="从真实业务场景分析TCC"></a>从真实业务场景分析TCC</h4><p>以一个电商中的支付业务来演示，用户在支付以后，需要进行更新订单状态，扣减账户余额，增加账户积分和扣减商品操作。</p>
+<p><img src="%5Cimage%5C2020-05-13%5C1162587-20181124221344003-1003664855.png" alt="1162587-20181124221344003-1003664855"></p>
+<p>在实际业务中为了防止超卖，有下单减库存和付款减库存的区别，支付除了账户余额，还有各种第三方支付等，这里我们为了描述方便，统一使用扣款减库存，扣款来源是用户账户余额。</p>
+<p><img src="%5Cimage%5C2020-05-13%5CCiqc1F6qgfuAJQCgAAG9JoGK4rY210.png" alt="Ciqc1F6qgfuAJQCgAAG9JoGK4rY210"></p>
+<p><strong>业务逻辑拆解</strong></p>
+<p>我们把订单业务拆解为以下几个步骤：</p>
+<ul>
+<li>订单更新为支付完成状态</li>
+<li>扣减用户账户余额</li>
+<li>增加用户账户积分</li>
+<li>扣减当前商品的库存</li>
+</ul>
+<p>如果不使用事务，上面的几个步骤都可能出现失败，最终会导致大量的数据的不一致，比如订单状态会更新失败，扣款却成功了；或者扣款失败，库存却扣减了等情况，这个在业务上是不能接受的，会出现大量的投诉。</p>
+<p>如果直接应用事务，不使用分布式事务，比如在代码中添加Spring的声明式事务注解，这样做实际上是在事务中嵌套了远程服务调用，一旦服务调用出现超时，事务无法提交，就会导致数据库连接被占用，出现大量的阻塞和失败，会导致服务宕机，另一方面，如果没有定义额外的回滚操作，比如遇到异常，非DB的服务调用失败时，则无法正确执行回滚。</p>
+<h4 id="业务系统改造"><a href="#业务系统改造" class="headerlink" title="业务系统改造"></a>业务系统改造</h4><p>下面应用TCC事务，需要对业务代码改造，抽象Try、Confirm和Cancel阶段。</p>
+<ul>
+<li><strong>Try操作</strong></li>
+</ul>
+<p>Try操作一般都是锁定某个资源，设置一个预备的状态，冻结部分数据，比如，订单服务添加一个预备状态，修改为UPDATING，也就是更新中的意思，冻结当前订单的操作，而不是就直接修改为支付成功。</p>
+<ul>
+<li><strong>Confirm操作</strong></li>
+</ul>
+<p>Confirm操作就是把前边Try操作锁定的资源提交，类比数据库事务中的Commit操作，在支付场景中，包括订单状态从准备中更新为支付成功，库存数据扣减冻结库存，积分数据增加预增加积分。</p>
+<ul>
+<li><strong>Cancel操作</strong></li>
+</ul>
+<p>Cancel操作执行的是业务上回滚操作，类比数据库事务中的Rollback操作，首先订单服务，撤销预备状态，还原为待支付状态或者已取消状态，库存服务冻结库存，添加到可销售库存中，积分服务也是一样，将预增加积分扣减掉<strong>。</strong></p>
+<p><strong>执行业务操作</strong></p>
+<p>下面来分析业务的实际执行操作，首先业务请求过来，开始执行 Try 操作，如果 TCC 分布式事务框架感知到各个服务的 Try 阶段都成功了以后，就会执行各个服务的 Confirm 逻辑。</p>
+<p>如果 Try 阶段有操作不能正确执行，比如订单失效、库存不足等，就会执行 Cancel 的逻辑，取消事务提交</p>
+<p><img src="%5Cimage%5C2020-05-13%5C1162587-20181124221639782-279567864.png" alt="1162587-20181124221639782-279567864"></p>
+<p>这里放上整个支付阶段的TCC事务流程</p>
+<p><img src="%5Cimage%5C2020-05-13%5C1162587-20181124232142806-1339085171.png" alt="1162587-20181124232142806-1339085171"></p>
+<h4 id="TCC对比2PC两阶段提交"><a href="#TCC对比2PC两阶段提交" class="headerlink" title="TCC对比2PC两阶段提交"></a>TCC对比2PC两阶段提交</h4><p>TCC事务模型的思想类似2PC提交，下面对比TCC和基于2PC事务XA规范对比</p>
+<p><strong>对比2PC提交</strong></p>
+<p><img src="%5Cimage%5C2020-05-13%5CCgqCHl6qgjmAASLlAAServJ4VUM890.png" alt="CgqCHl6qgjmAASLlAAServJ4VUM890"></p>
+<ul>
+<li><strong>第一阶段</strong></li>
+</ul>
+<p>在XA事务中，各个RM准备提交各自的事务分支，事实上就是准备提交资源更新操作（insert、delete、update等）；而在TCC中，是主业务操作请求各个子业务服务预留资源。</p>
+<ul>
+<li><strong>第二阶段</strong></li>
+</ul>
+<p>XA事务根据第一阶段每个RM是否都prepare成功，判断是要提交还是回滚，如果都prepare成功，那么就commit每个事务分支，反之则rollback每个事务分支。</p>
+<p>在 TCC 中，如果在第一阶段所有业务资源都预留成功，那么进入 Confirm 步骤，提交各个子业务服务，完成实际的业务处理，否则进入 Cancel 步骤，取消资源预留请求。</p>
+<p><strong>与2PC/XA两阶段提交的区别</strong></p>
+<p>2PC/XA是数据库或者存储资源层面的事务，实现的是强一致性，在两阶段提交的整个过程中，一直会持有数据库的锁。</p>
+<p>TCC关注业务层的正确提交和回滚，在Try阶段不涉及加锁，是业务层的分布式业务，关注最终一致性，不会一直持有各个业务资源的锁</p>
+<p>TCC的核心思想是针对每个业务操作，都要添加一个与其对应的确认和补偿操作，同时把相关的处理，从数据库转移到业务中，以此实现跨数据库的事务。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jajian/p/10014145.html">终于有人把“TCC分布式事务”实现原理讲明白了</a></p>
+<p><a target="_blank" rel="noopener" href="https://kaiwu.lagou.com/course/courseInfo.htm?courseId=69#/content">分布式技术原理与实战45讲》- 蒋越</a></p>
+</blockquote>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-08-09</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Technology-blog/" title="Technology blog">Technology blog </a><a class="tag" href="/tags/技术笔记/" title="技术笔记">技术笔记 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://yoursite.com/2020/08/09/2020-5-13-TCC/,Hexo,TCC事务,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/08/09/2020-5-18-Distributed%20lock/" title="什么是分布式锁及其应用场景">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/08/09/2020-5-12-XA/" title="XA规范">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'',
+  app_key:'',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>
