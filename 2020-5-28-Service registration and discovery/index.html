@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Core"><title>分布式服务的注册与发现 · David Cai</title><meta name="description" content="如何实现服务注册与发现在分布式服务中，服务注册和发现是一个特别重要的概念，为什么需要服务注册和发现？常用的服务发现组件有哪些？服务注册和发现对一致性有哪些要求呢？
+为什么需要服务注册和发现分布式系统下微服务架构的一个重要特性就就是可以快速上线或下线，从而可以让服务进行水平扩展，以保证服务的可用性。
+"><meta name="keywords" content="大大卫的博客"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.0.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">David Cai</a></h3><div class="description"><p>心之所愿，无事不成。<br> Nothing is impossible to a willing heart.</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/David-banana"><i class="fa fa-github"></i></a></li><li><a href="caidaweigo@163.com"><i class="fa fa-envelope"></i></a></li></ul><div class="footer"><div class="p"> <span>© 2019 - 2020 </span><i class="fa fa-star"></i><span> Core</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><a href="https://github.com/mrcore/hexo-theme-Anatole-Core" target="_blank">Anatole-Core.  </a><a href="http://www.beian.miit.gov.cn/" target="_blank">&nbsp;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/guestbook">留言</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>分布式服务的注册与发现</a></h3></div><div class="post-content"><h4 id="如何实现服务注册与发现"><a href="#如何实现服务注册与发现" class="headerlink" title="如何实现服务注册与发现"></a>如何实现服务注册与发现</h4><p>在分布式服务中，服务注册和发现是一个特别重要的概念，为什么需要服务注册和发现？常用的服务发现组件有哪些？服务注册和发现对一致性有哪些要求呢？</p>
+<h4 id="为什么需要服务注册和发现"><a href="#为什么需要服务注册和发现" class="headerlink" title="为什么需要服务注册和发现"></a>为什么需要服务注册和发现</h4><p>分布式系统下微服务架构的一个重要特性就就是可以快速上线或下线，从而可以让服务进行水平扩展，以保证服务的可用性。</p>
+<p>假设有一个电商会员服务，随着业务发展，服务器负载越来越高，需要新增服务器，如果没有服务注册与发现，就要把新的服务器地址配置到所有依赖会员模块的服务，并且相继重启他们，这显然是不合理的。</p>
+<p>服务注册与发现就是保证但服务上下线发生变化时，服务消费者和服务提供者能够保持正常通信。</p>
+<p>有了服务注册与发现就是保证当服务上下限发生变更时，服务消费者和服务提供者能够保持正常通信。</p>
+<p>有了服务注册和发现机制，消费者不需要知道具体服务提供者的真实物理地址就可以进行调用，也无需知道具体有多少个服务者可用，而服务提供者只需要注册到注册中心，就可以对外提供服务，在对外服务时不需要知道具体是哪些服务调用了自己。</p>
+<h4 id="服务注册与发现原理"><a href="#服务注册与发现原理" class="headerlink" title="服务注册与发现原理"></a>服务注册与发现原理</h4><p>服务注册和发现的基本流程如下图所示:</p>
+<p><img src="/2020-5-28-Service%20registration%20and%20discovery/Ciqc1F7GKL2AdvDaAAGP_eJ6zd0194.png" alt="Ciqc1F7GKL2AdvDaAAGP_eJ6zd0194"></p>
+<p>首先，在服务启动时，服务提供者会向注册中心注册服务，暴露自己的地址和端口等，注册中心会更新服务列表，服务消费者启动时会向注册中心请求可用的服务地址，并且在本地缓存一份提供这列表，这样在注册中心宕机时仍然可以正常调用服务。</p>
+<p>如果提供者集群发生变更，注册中心会将变更推送给服务消费者，更新可用的服务地址列表。</p>
+<h4 id="典型服务发现组件的类型"><a href="#典型服务发现组件的类型" class="headerlink" title="典型服务发现组件的类型"></a>典型服务发现组件的类型</h4><p>在目前的微服务解决方案中，有三种典型的服务发现组件，分别是ZooKeeper、Eureka和Nacos。</p>
+<p><strong>ZooKeeper</strong></p>
+<p>ZooKeeper主要应用在Dubbo的注册中心实现，由于Dubbo在国内的流行，Dubbo + ZooKeeper的典型服务化方案，是的ZooKeeper称为注册中的经典解决方案。</p>
+<p>ZooKeeper是一个树形结构的目录服务，支持变更推送，使用ZooKeeper实现服务注册，就是应用了这种目录结构。</p>
+<p>服务提供者在启动的时候，会在ZooKeeper上注册服务，以com.dubbo.DemoService为例，注册服务，其实就是在ZooKeeper的/dubbo/com.dubbo.DemoService/providers节点下创建一个节点，并写入自己的URL地址，这就代表了con.dubbo.DemoService这个服务的一个提供者。</p>
+<p>服务消费者在启动的时候，会向 ZooKeeper 注册中心订阅服务列表，就是读取并订阅 ZooKeeper 上 /dubbo/com.dubbo.DemoService/providers 节点下的所有子节点，并解析出所有提供者的 URL 地址来作为该服务地址列表。</p>
+<h4 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h4><p> 在Spring Cloud中，提供了Eureka来实现服务发现功能，Euraka采用的是Server和Client的模式进行设计，Eureka Server 扮演了服务注册中心的角色，为Client提供服务注册和发现的功能。</p>
+<p>Eureka Client 通过客户端注册的方式暴露服务，通过注解等方式嵌入到服务提供者的代码中，当服务启动时，服务发现组件会向注册中心注册自身提供的服务，并周期性地发送心跳来更新服务。<img src="/2020-5-28-Service%20registration%20and%20discovery/CgqCHl7GKNCAURouAAFzGomu7Gs531.png" alt="CgqCHl7GKNCAURouAAFzGomu7Gs531"></p>
+<p>如果连续多次心跳不能够发现服务，那么Eureka Server 就会将这个服务节点从服务注册表中移除，各个服务之间会通过注册中心的注册信息来实现调用。</p>
+<p><img src="/2020-5-28-Service%20registration%20and%20discovery/38fe257229c06bea3dc708b56adea08b.png" alt="38fe257229c06bea3dc708b56adea08b"></p>
+<p>Euerka在Spring Cloud中广泛应用，目前社区中集成的是1.0版本，在后续的版本更新中，Netflix 宣布 Euerka 2.0 闭源，于是开源社区中也出现了许多新的服务发现组件，比如 Spring Cloud Alibaba Nacos。</p>
+<h4 id="Nacos"><a href="#Nacos" class="headerlink" title="Nacos"></a>Nacos</h4><p>Nacos是阿里巴巴推出来的一个开源项目，提供了服务注册和发现功能，使用Nacos可以方便的集成Spring Cloud框架，如果正在使用Eureka或者Consul，可以通过少量的代码就能迁移到Nacos上。</p>
+<p>Nacos的应用和Eureka类似，独立于系统架构，需要部署Nacos Server，除了服务注册和发现之外，Nacos还提供了配置管理，元数据管理和流量管理等功能，并且提供了一个可视化的控制台管理界面。</p>
+<p>关于Nacos的更多应用，可以在Nacos的官网上找到相关的文档。</p>
+<h4 id="一致性对比"><a href="#一致性对比" class="headerlink" title="一致性对比"></a>一致性对比</h4><p>在讨论分布式系统时，一致性是一个绕不开的话题， CP模型优先保证一致性，可能导致注册中心可用性降低，AP模型优先保证可用性，可能出现服务错误。</p>
+<p>为了保证微服务的高可用，避免单点故障，注册中心一般是通过集群的方式来对外服务，比如ZooKeeper集群。</p>
+<p>ZooKeeper核心算法是Zab，实现的是CP一致性，所以ZooKeeper作为服务发现解决方案，在使用ZooKeeper获取服务列表时，如果ZooKeeper正在选主，或者ZooKeeper集群中以上机器不可用时，那么将无法获得数据 。</p>
+<p>在 Spring Cloud Eureka 中，各个节点都是平等的，几个节点挂掉不影响正常节点的工作，剩余的节点依然可以提供注册和查询服务。只要有一台 Eureka 还在，就能保证注册服务可用，只不过查到的信息可能不是最新的版本，不保证一致性。</p>
+<p>Spring Cloud Nacos 在 1.0.0 版本正式支持 AP 和 CP 两种一致性协议，可以动态切换，感兴趣的同学可以去了解一下。</p>
+<p>对于服务注册和发现场景来说，一般认为，可用性比数据一致性更加重要。针对同一个服务，即使注册中心的不同节点保存的服务提供者信息不相同，会出现部分提供者地址不存在等，不会导致严重的服务不可用。对于服务消费者来说，能消费才是最重要的，拿到可能不正确的服务实例信息后尝试消费，也要比因为无法获取实例信息而拒绝服务好。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>这里主要总结分析了服务注册和发现的基本流程，几种典型的服务发现组件，以及在不同服务发现组件中，是如何实现一致性的。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://kaiwu.lagou.com/course/courseInfo.htm?courseId=69#/detail/pc?id=1913">分布式技术原理与实战45讲</a></p>
+</blockquote>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-08-09</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Technology-blog/" title="Technology blog">Technology blog </a><a class="tag" href="/tags/技术笔记/" title="技术笔记">技术笔记 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://yoursite.com/2020-5-28-Service registration and discovery/,David Cai,分布式服务的注册与发现,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020-5-31-%E5%89%91%E7%81%B5/" title="剑灵">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020-5-27-%E9%AC%BC%E7%81%AD%E4%B9%8B%E5%88%83/" title="鬼灭完结">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'',
+  app_key:'',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
